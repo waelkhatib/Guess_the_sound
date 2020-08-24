@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<music>
+     <level>
+        <levelNumber>1</levelNumber>
+		<musicId>cat</musicId>
+		<ribbon>ANIMAL</ribbon>
+		<answer>CAT</answer>
+    </level>
+    <level>
+        <levelNumber>2</levelNumber>
+		<musicId>doorbell</musicId>
+		<ribbon>HOUSE</ribbon>
+		<answer>DOORBELL</answer>
+    </level>
+    
+    <level>
+        <levelNumber>3</levelNumber>
+		<musicId>elephant</musicId>
+		<ribbon>ANIMAL</ribbon>
+		<answer>ELEPHANT</answer>
+    </level>
+    
+    <level>
+        <levelNumber>4</levelNumber>
+		<musicId>frog</musicId>
+		<ribbon>ANIMAL</ribbon>
+		<answer>FROG</answer>
+    </level>
+    
+    <level>
+        <levelNumber>5</levelNumber>
+		<musicId>rain</musicId>
+		<ribbon>WATER</ribbon>
+		<answer>RAIN</answer>
+    </level>
+    
+    <level>
+        <levelNumber>6</levelNumber>
+		<musicId>laughing</musicId>
+		<ribbon>FUN</ribbon>
+		<answer>LAUGHING</answer>
+    </level>
+    
+    <level>
+        <levelNumber>7</levelNumber>
+		<musicId>peacock</musicId>
+		<ribbon>BIRD</ribbon>
+		<answer>PEAPOCK</answer>
+    </level>
+    
+     
+    <level>
+        <levelNumber>8</levelNumber>
+		<musicId>bell</musicId>
+		<ribbon>SCHOOL</ribbon>
+		<answer>BELL</answer>
+    </level>
+    <level>
+        <levelNumber>9</levelNumber>
+		<musicId>santa</musicId>
+		<ribbon>FESTIVAL</ribbon>
+		<answer>SANTA</answer>
+    </level>
+    <level>
+        <levelNumber>10</levelNumber>
+		<musicId>dove</musicId>
+		<ribbon>BIRD</ribbon>
+		<answer>DOVE</answer>
+    </level>
+ </music>

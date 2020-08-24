@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/main_bg" >
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="52.0dip"
+        android:layout_height="50.0dip"
+        android:layout_alignBaseline="@+id/AllAppsGoogle"
+        android:layout_alignBottom="@+id/AllAppsGoogle"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/facebookclicked" />
+
+     
+
+    <Button
+        android:id="@+id/letsPlay"
+        android:layout_width="200.0dip"
+        android:layout_height="45.0dip"
+        android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20.0dip"
+        android:background="@drawable/letsplayclickxml" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="180.0dip"
+        android:layout_height="180.0dip"
+        android:layout_below="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/iconmain" 
+        android:contentDescription="@string/app_name"/>
+
+    <Button
+        android:id="@+id/AllAppsGoogle"
+        android:layout_width="50.0dip"
+        android:layout_height="50.0dip"
+        android:layout_alignLeft="@+id/letsPlay"
+        android:layout_below="@+id/letsPlay"
+        android:layout_marginTop="19.0dip"
+        android:background="@drawable/googleplayclickedxml" />
+
+    <Button
+        android:id="@+id/restartGame"
+        android:layout_width="50.0dip"
+        android:layout_height="50.0dip"
+        android:layout_alignBaseline="@+id/button1"
+        android:layout_alignBottom="@+id/button1"
+        android:layout_alignRight="@+id/letsPlay"
+        android:background="@drawable/restartxml" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="180.0dip"
+        android:layout_height="105.0dip"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="14.0dip"
+        android:src="@drawable/title" 
+        android:contentDescription="@string/app_name"/>
+    
+    
+     <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/admob_publisher_id" />
+
+</RelativeLayout>
