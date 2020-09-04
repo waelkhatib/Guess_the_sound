@@ -880,6 +880,7 @@ drawable common_google_signin_btn_text_light_normal_background
 drawable corect
 drawable dialog_bg
 drawable dialogshape
+drawable facebook
 drawable facebookbuttonicon
 drawable facebookclicked
 drawable firstsmallbuttonclicked
@@ -1169,9 +1170,11 @@ drawable removeletterhint
 drawable restart
 drawable restartxml
 drawable skip
+drawable syriastore
 drawable title
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
+drawable update_arrow
 drawable wordbox
 id ALT
 id AllAppsGoogle
@@ -1742,7 +1745,9 @@ string tagmanager_preview_dialog_button
 string tagmanager_preview_dialog_message
 string tagmanager_preview_dialog_title
 string wallet_buy_button_place_holder
+string warning
 string yes
+string you_must_turn_on_mobile_data
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style Animation_AppCompat_Dialog

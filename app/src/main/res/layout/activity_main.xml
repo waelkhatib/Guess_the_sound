@@ -9,8 +9,7 @@
         android:id="@+id/button1"
         android:layout_width="52.0dip"
         android:layout_height="50.0dip"
-        android:layout_alignBaseline="@+id/AllAppsGoogle"
-        android:layout_alignBottom="@+id/AllAppsGoogle"
+        android:layout_below="@+id/letsPlay"
         android:layout_centerHorizontal="true"
         android:background="@drawable/facebookclicked" />
 
@@ -23,6 +22,7 @@
         android:layout_below="@+id/imageView1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20.0dip"
+        android:layout_marginBottom="19dip"
         android:background="@drawable/letsplayclickxml" />
 
     <ImageView
@@ -38,18 +38,17 @@
         android:id="@+id/AllAppsGoogle"
         android:layout_width="50.0dip"
         android:layout_height="50.0dip"
-        android:layout_alignLeft="@+id/letsPlay"
+        android:layout_alignStart="@+id/letsPlay"
         android:layout_below="@+id/letsPlay"
-        android:layout_marginTop="19.0dip"
+
         android:background="@drawable/googleplayclickedxml" />
 
     <Button
         android:id="@+id/restartGame"
         android:layout_width="50.0dip"
         android:layout_height="50.0dip"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_alignRight="@+id/letsPlay"
+        android:layout_alignEnd="@+id/letsPlay"
+        android:layout_below="@+id/letsPlay"
         android:background="@drawable/restartxml" />
 
     <ImageView

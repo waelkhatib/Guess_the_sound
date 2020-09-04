@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -404,12 +405,31 @@ public class TheGame extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
+				ArrayList<Uri> uris = new ArrayList<>();
 				String path=SaveBackground();
-				Intent share = new Intent(Intent.ACTION_SEND);
-				share.setType("image/jpeg");
-				share.putExtra(Intent.EXTRA_STREAM, Uri.parse(path));
-				startActivity(Intent.createChooser(share, "Share Image"));
+				File dest = Environment.getExternalStorageDirectory();
+				InputStream in = getResources().openRawResource(getResources().getIdentifier(SoundFile,"raw",getPackageName()));
+
+				try
+				{
+					OutputStream out = new FileOutputStream(new File(dest, SoundFile+".mp3"));
+					byte[] buf = new byte[1024];
+					int len;
+					while ( (len = in.read(buf, 0, buf.length)) != -1)
+					{
+						out.write(buf, 0, len);
+					}
+					in.close();
+					out.close();
+				}
+				catch (Exception e) {}
+
+				Intent share = new Intent(Intent.ACTION_SEND_MULTIPLE);
+				share.setType("*/*");
+				uris.add(Uri.parse(path));
+				uris.add(Uri.parse(Environment.getExternalStorageDirectory().toString() + "/"+SoundFile+".mp3"));
+				share.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+				startActivity(Intent.createChooser(share, "Share level"));
 
 			}
 		});

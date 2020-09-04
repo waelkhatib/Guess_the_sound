@@ -10,7 +10,7 @@
     <string name="number_of_stage_ad">3</string>
 
     <!-- play store application link i.e more apps -->
-    <string name="play_more_apps">https://play.google.com/store/search?q=gkcrop</string>  
+    <string name="play_more_apps">https://syriastore.sy/apps/com.gkcrop.guessthesound</string>
     
     <!-- your facebook url -->
     <string name="facebook_url">http://facebook.com</string>
@@ -23,7 +23,8 @@
     <string name="reset_no">No</string>
     <string name="reset_msg_1">CONGRATULATIONS!</string>
     <string name="reset_msg_2">Congratulations! You have completed this part of the game.\nDo not hesitate to come back later to play new levels.</string>
-    
+    <string name="you_must_turn_on_mobile_data">You must turn on mobile data</string>
+    <string name="warning">Warning</string>
     
     <!-- Score Management -->
     <string name="how_much_for_first_letter">15</string><!-- how much point you set for use that hint -->
