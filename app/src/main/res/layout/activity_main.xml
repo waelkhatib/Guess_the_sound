@@ -11,7 +11,7 @@
         android:layout_height="50.0dip"
         android:layout_below="@+id/letsPlay"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/facebookclicked" />
+        android:background="@drawable/facebook_bg" />
 
      
 
@@ -21,6 +21,10 @@
         android:layout_height="45.0dip"
         android:layout_below="@+id/imageView1"
         android:layout_centerHorizontal="true"
+        android:text="@string/lets_play"
+        android:textColor="#48cec0"
+        android:textSize="16dp"
+        android:textStyle="bold"
         android:layout_marginTop="20.0dip"
         android:layout_marginBottom="19dip"
         android:background="@drawable/letsplayclickxml" />
@@ -41,7 +45,7 @@
         android:layout_alignStart="@+id/letsPlay"
         android:layout_below="@+id/letsPlay"
 
-        android:background="@drawable/googleplayclickedxml" />
+        android:background="@drawable/store_bg" />
 
     <Button
         android:id="@+id/restartGame"
@@ -49,7 +53,7 @@
         android:layout_height="50.0dip"
         android:layout_alignEnd="@+id/letsPlay"
         android:layout_below="@+id/letsPlay"
-        android:background="@drawable/restartxml" />
+        android:background="@drawable/restart_bg" />
 
     <ImageView
         android:id="@+id/imageView2"

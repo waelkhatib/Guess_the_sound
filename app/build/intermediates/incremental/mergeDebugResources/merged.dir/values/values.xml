@@ -1145,6 +1145,8 @@
     <string name="admob_intertestial_id">ca-app-pub-8356404931736973/4633515992</string>
     <string name="admob_publisher_id">ca-app-pub-8356404931736973/2001120391</string>
     <string name="app_name">Guess The Sound</string>
+    <string name="ask">Ask</string>
+    <string name="back">Back</string>
     <string name="bomb_msg_1">Do you want to hide 3 letters for 25 coins?</string>
     <string name="bomb_msg_2">You must have 25 coins!</string>
     <string name="bomb_msg_3">HIDE 3 LETTERS!</string>
@@ -1207,6 +1209,7 @@
     <string name="common_open_on_phone">Open on phone</string>
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
+    <string name="continue1">Continue</string>
     <string name="facebook_url">http://facebook.com</string>
     <string name="fcm_fallback_notification_channel_label">Miscellaneous</string>
     <string name="first_letter_msg_1">Do you want to discover 1st letter for 15 coins?</string>
@@ -1217,6 +1220,7 @@
     <string name="how_much_for_bomb">25</string>
     <string name="how_much_for_first_letter">15</string>
     <string name="how_much_for_skip">35</string>
+    <string name="lets_play">Lets Play</string>
     <string name="mr_button_content_description">Cast button</string>
     <string name="mr_cast_button_connected">Cast button. Connected</string>
     <string name="mr_cast_button_connecting">Cast button. Connecting</string>
@@ -1259,6 +1263,7 @@
     <string name="s6">Allow Ad to create a calendar event?</string>
     <string name="s7">Test Ad</string>
     <string name="search_menu_title">Search</string>
+    <string name="skip">Skip</string>
     <string name="skip_msg_1">Do you want to skip this question for 35 coins?</string>
     <string name="skip_msg_2">You must have 35 coins!</string>
     <string name="skip_msg_3">Skip Question!</string>
@@ -1266,9 +1271,11 @@
     <string name="tagmanager_preview_dialog_button">Continue</string>
     <string name="tagmanager_preview_dialog_message">Preview mode updated.</string>
     <string name="tagmanager_preview_dialog_title">Preview</string>
+    <string name="try_again">Try Again</string>
     <string name="wallet_buy_button_place_holder">Buy with Google</string>
     <string name="warning">Warning</string>
     <string name="yes">Yes</string>
+    <string name="you_must_have_internet_access">You must have internet access</string>
     <string name="you_must_turn_on_mobile_data">You must turn on mobile data</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>

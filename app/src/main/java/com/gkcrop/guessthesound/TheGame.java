@@ -30,6 +30,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -43,7 +44,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -61,11 +66,12 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.loopj.android.image.SmartImageView;
-
+import android.Manifest;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 @SuppressLint("NewApi")
 public class TheGame extends Activity {
+	private static final int MY_PERMISSIONS_WRITE =12 ;
 	// Variables
 	InterstitialAd interstitial;
 	private Button[] word_btn;
@@ -371,25 +377,25 @@ public class TheGame extends Activity {
 		});
 
 
-		if (Integer.parseInt(lvl) % Integer.parseInt(getString(R.string.number_of_stage_ad)) == 0) {
-			interstitial = new InterstitialAd(this);
-			interstitial.setAdUnitId(getString(R.string.admob_intertestial_id));
-			interstitial.loadAd(new AdRequest.Builder().build());
-			interstitial.show();
-			if (!interstitial.isLoaded()) {
-				AdRequest adRequest1 = new AdRequest.Builder()
-				.build();
-				// Begin loading your interstitial.
-				interstitial.loadAd(adRequest1);
-			}
-			interstitial.setAdListener(new AdListener() {
-				@Override
-				public void onAdLoaded() {
-					super.onAdLoaded();
-					interstitial.show();
-				}
-			});
-		} 
+//		if (Integer.parseInt(lvl) % Integer.parseInt(getString(R.string.number_of_stage_ad)) == 0) {
+//			interstitial = new InterstitialAd(this);
+//			interstitial.setAdUnitId(getString(R.string.admob_intertestial_id));
+//			interstitial.loadAd(new AdRequest.Builder().build());
+//			interstitial.show();
+//			if (!interstitial.isLoaded()) {
+//				AdRequest adRequest1 = new AdRequest.Builder()
+//				.build();
+//				// Begin loading your interstitial.
+//				interstitial.loadAd(adRequest1);
+//			}
+//			interstitial.setAdListener(new AdListener() {
+//				@Override
+//				public void onAdLoaded() {
+//					super.onAdLoaded();
+//					interstitial.show();
+//				}
+//			});
+//		}
 
 		btn_back.setOnClickListener(new View.OnClickListener() {
 
@@ -405,34 +411,53 @@ public class TheGame extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				ArrayList<Uri> uris = new ArrayList<>();
-				String path=SaveBackground();
-				File dest = Environment.getExternalStorageDirectory();
-				InputStream in = getResources().openRawResource(getResources().getIdentifier(SoundFile,"raw",getPackageName()));
+				if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					// only for gingerbread and newer versions
 
-				try
-				{
-					OutputStream out = new FileOutputStream(new File(dest, SoundFile+".mp3"));
-					byte[] buf = new byte[1024];
-					int len;
-					while ( (len = in.read(buf, 0, buf.length)) != -1)
-					{
-						out.write(buf, 0, len);
-					}
-					in.close();
-					out.close();
-				}
-				catch (Exception e) {}
+					if (ContextCompat.checkSelfPermission(TheGame.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+						// Permission is not granted
+						if (!ActivityCompat.shouldShowRequestPermissionRationale(TheGame.this,
+								Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+							// No explanation needed; request the permission
+							ActivityCompat.requestPermissions(TheGame.this,
+									new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+									MY_PERMISSIONS_WRITE);
+						}else
+							shareLevel();
+					}else
+						shareLevel();
 
-				Intent share = new Intent(Intent.ACTION_SEND_MULTIPLE);
-				share.setType("*/*");
-				uris.add(Uri.parse(path));
-				uris.add(Uri.parse(Environment.getExternalStorageDirectory().toString() + "/"+SoundFile+".mp3"));
-				share.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
-				startActivity(Intent.createChooser(share, "Share level"));
+			}else
+					shareLevel();
+		}});
+	}
 
+	private void shareLevel() {
+		ArrayList<Uri> uris = new ArrayList<>();
+		String path=SaveBackground();
+		File dest = Environment.getExternalStorageDirectory();
+		InputStream in = getResources().openRawResource(getResources().getIdentifier(SoundFile,"raw",getPackageName()));
+
+		try
+		{
+			OutputStream out = new FileOutputStream(new File(dest, SoundFile+".mp3"));
+			byte[] buf = new byte[1024];
+			int len;
+			while ( (len = in.read(buf, 0, buf.length)) != -1)
+			{
+				out.write(buf, 0, len);
 			}
-		});
+			in.close();
+			out.close();
+		}
+		catch (Exception e) {}
+
+		Intent share = new Intent(Intent.ACTION_SEND_MULTIPLE);
+		share.setType("*/*");
+		uris.add(Uri.parse(path));
+		uris.add(Uri.parse(Environment.getExternalStorageDirectory().toString() + "/"+SoundFile+".mp3"));
+		share.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+		startActivity(Intent.createChooser(share, "Share level"));
 	}
 
 	@Override
@@ -571,17 +596,18 @@ public class TheGame extends Activity {
 		SmartImageView image = (SmartImageView) dialog
 				.findViewById(R.id.imageDialog);
 		Button dialogBtn = (Button) dialog.findViewById(R.id.dialogBtn);
+		dialogBtn.setGravity(Gravity.CENTER);
 		TextView score = (TextView) dialog.findViewById(R.id.points);
 
 		if (type == 1) {
 			image.setImageResource(R.drawable.corect);
-			dialogBtn.setText(" Continue "); // Next level button
+			dialogBtn.setText(R.string.continue1); // Next level button
 			score.setText("+" + points);
 			writeData("" + (Integer.parseInt(lvl) + 1) + "|"
 					+ (Integer.parseInt(coins) + Integer.parseInt(points)));
 		} else if (type == 2) {
 			image.setImageResource(R.drawable.gresit);
-			dialogBtn.setText("  Try Again  "); // Try again button, restart
+			dialogBtn.setText(R.string.try_again); // Try again button, restart
 			// current level
 			score.setText("-5");
 			if (Integer.parseInt(coins) > 0 && Integer.parseInt(coins) <= 5) {
@@ -787,5 +813,12 @@ public class TheGame extends Activity {
 
 		return ""+stringbuilder1;
 
+	}
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		if (requestCode == MY_PERMISSIONS_WRITE && grantResults.length > 0
+				&& grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+		shareLevel();
+		}
 	}
 }

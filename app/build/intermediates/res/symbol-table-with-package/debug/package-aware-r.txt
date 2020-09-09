@@ -881,6 +881,8 @@ drawable corect
 drawable dialog_bg
 drawable dialogshape
 drawable facebook
+drawable facebook_bg
+drawable facebook_click
 drawable facebookbuttonicon
 drawable facebookclicked
 drawable firstsmallbuttonclicked
@@ -1168,8 +1170,15 @@ drawable removealetter
 drawable removealetterfinshed
 drawable removeletterhint
 drawable restart
+drawable restart_bg
+drawable restart_click
 drawable restartxml
+drawable round_rect
+drawable round_rect_click
+drawable round_rect_dark
 drawable skip
+drawable store_bg
+drawable store_click
 drawable syriastore
 drawable title
 drawable tooltip_frame_dark
@@ -1623,6 +1632,8 @@ string action_settings
 string admob_intertestial_id
 string admob_publisher_id
 string app_name
+string ask
+string back
 string bomb_msg_1
 string bomb_msg_2
 string bomb_msg_3
@@ -1685,6 +1696,7 @@ string common_google_play_services_wear_update_text
 string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
+string continue1
 string facebook_url
 string fcm_fallback_notification_channel_label
 string first_letter_msg_1
@@ -1695,6 +1707,7 @@ string hello_world
 string how_much_for_bomb
 string how_much_for_first_letter
 string how_much_for_skip
+string lets_play
 string mr_button_content_description
 string mr_cast_button_connected
 string mr_cast_button_connecting
@@ -1737,6 +1750,7 @@ string s5
 string s6
 string s7
 string search_menu_title
+string skip
 string skip_msg_1
 string skip_msg_2
 string skip_msg_3
@@ -1744,9 +1758,11 @@ string status_bar_notification_info_overflow
 string tagmanager_preview_dialog_button
 string tagmanager_preview_dialog_message
 string tagmanager_preview_dialog_title
+string try_again
 string wallet_buy_button_place_holder
 string warning
 string yes
+string you_must_have_internet_access
 string you_must_turn_on_mobile_data
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light

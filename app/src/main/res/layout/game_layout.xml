@@ -22,9 +22,11 @@
             android:id="@+id/button1"
             android:layout_width="60.0dip"
             android:layout_height="30.0dip"
+            android:textColor="#48cec0"
+            android:text="@string/back"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/backbutton" />
+            android:background="@drawable/round_rect_dark" />
 
         <TextView
             android:id="@+id/textView2"
@@ -129,9 +131,14 @@
                 android:id="@+id/button6"
                 android:layout_width="55.0dip"
                 android:layout_height="55.0dip"
+
                 android:layout_alignBottom="@+id/imageView1"
                 android:layout_alignParentLeft="true"
-                android:background="@drawable/ask"
+                android:background="#6dc5f2"
+                android:textSize="22dp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:text="@string/ask"
                 android:visibility="visible" />
 
             <Button
@@ -148,7 +155,11 @@
                 android:layout_height="55.0dip"
                 android:layout_alignParentLeft="true"
                 android:layout_alignTop="@+id/imageView1"
-                android:background="@drawable/skip" />
+                android:background="#6dc5f2"
+                android:textSize="22dp"
+                android:text="@string/skip"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/button4"
@@ -174,6 +185,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:gravity="center"
+                android:layoutDirection="ltr"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >

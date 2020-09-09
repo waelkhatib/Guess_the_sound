@@ -9,10 +9,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -22,6 +27,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import android.Manifest;
 
 public class MainActivity extends Activity {
 
@@ -33,7 +39,10 @@ public class MainActivity extends Activity {
 	Button resButton;
 	private AdView mAdView;
 	private InterstitialAd mInterstitial;
-
+    private  final int INTERNET_FOR_STORE=1;
+    private  final int ACCESS_NETWORK_STATE_FOR_STORE=2;
+    private  final int INTERNET_FOR_FACEBOOK=3;
+    private  final int ACCESS_NETWORK_STATE_FOR_FACEBOOK=4;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,34 +90,27 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-                if(isConnected()) {
-					startActivity(new Intent(
-							Intent.ACTION_VIEW,
-							Uri.parse(getString(R.string.play_more_apps))));
-				}else {
-					AlertDialog.Builder alert = new AlertDialog.Builder(
-							MainActivity.this);
-					alert.setTitle(getString(R.string.warning));
-					alert.setMessage(getString(R.string.you_must_turn_on_mobile_data));
+				if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					// only for gingerbread and newer versions
 
-					alert.setPositiveButton(getString(R.string.ok),
-							new DialogInterface.OnClickListener() {
+					if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+						// Permission is not granted
+						if (!ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+								Manifest.permission.INTERNET)) {
+							// No explanation needed; request the permission
+							ActivityCompat.requestPermissions(MainActivity.this,
+									new String[]{Manifest.permission.INTERNET},
+									INTERNET_FOR_STORE);
 
-								public void onClick(DialogInterface dialog, int which) {
-									// TODO Auto-generated method stub
+					}
 
-
-								}
-							});
-
-
-
-
-					alert.show();
 				}
+					check_connect_to_store();
 
-			}
-		});
+
+				}else
+				connect_to_SyriaStore();
+		}});
 
 		resButton.setOnClickListener(new View.OnClickListener() {
 
@@ -150,14 +152,105 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(
-						Intent.ACTION_VIEW,
-						Uri.parse(getString(R.string.facebook_url))));
+				if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					// only for gingerbread and newer versions
+
+					if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+						// Permission is not granted
+						if (!ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+								Manifest.permission.INTERNET)) {
+							// No explanation needed; request the permission
+							ActivityCompat.requestPermissions(MainActivity.this,
+									new String[]{Manifest.permission.INTERNET},
+									INTERNET_FOR_FACEBOOK);
+
+						}
+
+					}
+					check_connect_facebook();
+
+
+				}else
+					connect_to_facebook();
 			}
 		});
 
 
 
+	}
+
+	private void check_connect_to_store() {
+		if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
+				// Permission is not granted
+				if (!ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+						Manifest.permission.ACCESS_NETWORK_STATE)) {
+					// No explanation needed; request the permission
+					ActivityCompat.requestPermissions(MainActivity.this,
+							new String[]{Manifest.permission.ACCESS_NETWORK_STATE},
+							ACCESS_NETWORK_STATE_FOR_STORE);
+
+			}else
+				connect_to_SyriaStore();
+
+		}else
+			connect_to_SyriaStore();
+	}
+
+	private void check_connect_facebook() {
+		if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
+			// Permission is not granted
+			if (!ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+					Manifest.permission.ACCESS_NETWORK_STATE)) {
+				// No explanation needed; request the permission
+				ActivityCompat.requestPermissions(MainActivity.this,
+						new String[]{Manifest.permission.ACCESS_NETWORK_STATE},
+						ACCESS_NETWORK_STATE_FOR_FACEBOOK);
+
+			}else
+				connect_to_facebook();
+
+		}else
+			connect_to_facebook();
+	}
+
+	private void connect_to_facebook() {
+		if(isConnected(false)) {
+			startActivity(new Intent(
+					Intent.ACTION_VIEW,
+					Uri.parse(getString(R.string.facebook_url))));
+		}else {
+			createDialog(R.string.warning,R.string.you_must_have_internet_access);
+		}
+	}
+
+	private void connect_to_SyriaStore() {
+		if(isConnected(true)) {
+			startActivity(new Intent(
+					Intent.ACTION_VIEW,
+					Uri.parse(getString(R.string.play_more_apps))));
+		}else {
+			createDialog(R.string.warning,R.string.you_must_turn_on_mobile_data);
+		}
+	}
+
+	private void createDialog(int titleId,int messageId) {
+		AlertDialog.Builder alert = new AlertDialog.Builder(
+				MainActivity.this);
+		alert.setTitle(getString(titleId));
+		alert.setMessage(getString(messageId));
+
+		alert.setPositiveButton(getString(R.string.ok),
+				new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+
+
+					}
+				});
+
+
+		alert.show();
 	}
 
 	@Override
@@ -166,12 +259,15 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	public boolean isConnected() {
+	public boolean isConnected(boolean is_data) {
 		boolean connected = false;
 		try {
 			ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 			NetworkInfo nInfo = cm.getActiveNetworkInfo();
-			connected = nInfo != null &&nInfo.getType()==ConnectivityManager.TYPE_MOBILE && nInfo.isAvailable() && nInfo.isConnected();
+			if(is_data)
+				connected = nInfo != null &&nInfo.getType()==ConnectivityManager.TYPE_MOBILE && nInfo.isAvailable() && nInfo.isConnected();
+			else
+				connected = nInfo != null &&(nInfo.getType()==ConnectivityManager.TYPE_MOBILE||nInfo.getType()==ConnectivityManager.TYPE_WIFI) && nInfo.isAvailable() && nInfo.isConnected();
 			return connected;
 		} catch (Exception e) {
 			Log.e("Connectivity Exception", e.getMessage());
@@ -195,4 +291,24 @@ public class MainActivity extends Activity {
 
 	}
 
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		if(requestCode==ACCESS_NETWORK_STATE_FOR_STORE&& grantResults.length>0
+				&& grantResults[0] == PackageManager.PERMISSION_GRANTED){
+			connect_to_SyriaStore();
+		}else
+		if(requestCode==ACCESS_NETWORK_STATE_FOR_FACEBOOK && grantResults.length>0
+				&& grantResults[0] == PackageManager.PERMISSION_GRANTED){
+			connect_to_facebook();
+		}else
+		if(requestCode==INTERNET_FOR_STORE && grantResults.length>0
+				&& grantResults[0] == PackageManager.PERMISSION_GRANTED){
+			connect_to_SyriaStore();
+		}else
+			if(requestCode==INTERNET_FOR_FACEBOOK && grantResults.length>0
+					&& grantResults[0] == PackageManager.PERMISSION_GRANTED){
+				connect_to_facebook();
+		}
+
+	}
 }

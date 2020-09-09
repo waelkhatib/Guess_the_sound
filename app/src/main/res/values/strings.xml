@@ -24,6 +24,7 @@
     <string name="reset_msg_1">CONGRATULATIONS!</string>
     <string name="reset_msg_2">Congratulations! You have completed this part of the game.\nDo not hesitate to come back later to play new levels.</string>
     <string name="you_must_turn_on_mobile_data">You must turn on mobile data</string>
+    <string name="you_must_have_internet_access">You must have internet access</string>
     <string name="warning">Warning</string>
     
     <!-- Score Management -->
@@ -49,5 +50,11 @@
     <string name="point_give">1|10</string><!-- note that here 1 is indicate 1st stage and 10 is point so here we have 10 point already in that game for first start -->
     
     <string name="a">A</string>
+    <string name="lets_play">Lets Play</string>
+    <string name="ask">Ask</string>
+    <string name="skip">Skip</string>
+    <string name="back">Back</string>
+    <string name="continue1">Continue</string>
+    <string name="try_again">Try Again</string>
 
 </resources>
