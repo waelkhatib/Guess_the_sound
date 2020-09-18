@@ -21,7 +21,7 @@
     <string name="reset_msg_2">مبروك! لقد أنهيت هذا الجزء من اللعبة.\nلا تخجل أن تعود لاحقاً لتلعب مراحل جديدة.</string>
     <string name="you_must_turn_on_mobile_data">يجب تشغيل بيانات الجوال</string>
     <string name="you_must_have_internet_access">يجب أن يكون لديك وصول للإنترنيت</string>
-
+    <string name="warning">تحذير</string>
     <!-- Score Management -->
     <string name="how_much_for_first_letter">15</string><!-- how much point you set for use that hint -->
     <string name="how_much_for_bomb">25</string>
@@ -43,10 +43,10 @@
     <string name="reset_title">هل تريد إعادة اللعب من جديد؟</string>
     <string name="reset_yes">نعم</string>
     <string name="reset_no">لا</string>
-    <string name="warning">تحذير</string>
+
     <string name="yes">نعم</string>
     <string name="no">لا</string>
-    <string name="ok">موافق</string>
+    <string name="ok">حسناً</string>
     <string name="bomb_msg_2">يجب امتلاك 25 قطعة نقدية!</string>
     <string name="bomb_msg_3">إخفاء ثلاثة أحرف!</string>
     <string name="skip_msg_1">هل تريد تجاوز هذا السؤال مقابل 35 قطعة نقدية؟</string>
@@ -54,7 +54,7 @@
     <string name="skip">تجاوز</string>
     <string name="back">عودة</string>
     <string name="ask">اسأل</string>
-    <string name="continue1">تابع</string>
+    <string name="continue1">متابعة</string>
     <string name="try_again">حاول مرة أخرى</string>
 
 </resources>

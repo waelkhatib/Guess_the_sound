@@ -35,10 +35,9 @@ public class MainActivity extends Activity {
 	Button GooglePlayApps;
 	Button LetsPlay;
 	Context context;
-	Button movieShadow;
+	//Button movieShadow;
 	Button resButton;
-	private AdView mAdView;
-	private InterstitialAd mInterstitial;
+    private InterstitialAd mInterstitial;
     private  final int INTERNET_FOR_STORE=1;
     private  final int ACCESS_NETWORK_STATE_FOR_STORE=2;
     private  final int INTERNET_FOR_FACEBOOK=3;
@@ -48,7 +47,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		mAdView = (AdView) findViewById(R.id.adView);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
 		mAdView.loadAd(new AdRequest.Builder().build());
 
 		mInterstitial = new InterstitialAd(this);
@@ -277,8 +276,7 @@ public class MainActivity extends Activity {
 
 	public boolean fileExist(){
 		File file = new File(getFilesDir()+File.separator+"thewords.dat");
-		if(file.exists()){return true;}
-		else{return false;}    
+		return file.exists();
 	}
 
 	private void writeData(String dataStr){
@@ -303,11 +301,11 @@ public class MainActivity extends Activity {
 		}else
 		if(requestCode==INTERNET_FOR_STORE && grantResults.length>0
 				&& grantResults[0] == PackageManager.PERMISSION_GRANTED){
-			connect_to_SyriaStore();
+			check_connect_to_store();
 		}else
-			if(requestCode==INTERNET_FOR_FACEBOOK && grantResults.length>0
-					&& grantResults[0] == PackageManager.PERMISSION_GRANTED){
-				connect_to_facebook();
+		if(requestCode==INTERNET_FOR_FACEBOOK && grantResults.length>0
+				&& grantResults[0] == PackageManager.PERMISSION_GRANTED){
+			check_connect_facebook();
 		}
 
 	}

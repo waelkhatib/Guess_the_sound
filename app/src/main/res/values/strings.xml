@@ -10,7 +10,7 @@
     <string name="number_of_stage_ad">3</string>
 
     <!-- play store application link i.e more apps -->
-    <string name="play_more_apps">https://syriastore.sy/apps/com.gkcrop.guessthesound</string>
+    <string name="play_more_apps">https://www.syriastore.sy/app/com.gkcrop.guessthesound</string>
     
     <!-- your facebook url -->
     <string name="facebook_url">http://facebook.com</string>
@@ -56,5 +56,6 @@
     <string name="back">Back</string>
     <string name="continue1">Continue</string>
     <string name="try_again">Try Again</string>
+    <string name="_5" translatable="false">+5</string>
 
 </resources>

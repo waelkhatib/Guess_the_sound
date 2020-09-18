@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:label="@string/app_name"
         android:name="android.support.multidex.MultiDexApplication"
-        android:theme="@android:style/Theme.Black.NoTitleBar" >
+        android:theme="@android:style/Theme.Black.NoTitleBar"
+        android:fullBackupContent="@xml/backup_descriptor">
         <activity
             android:name="com.gkcrop.guessthesound.SplashActivity"
             android:label="@string/app_name" >

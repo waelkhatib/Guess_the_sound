@@ -12,8 +12,8 @@
         android:id="@+id/relativeLayout1"
         android:layout_width="wrap_content"
         android:layout_height="40.0dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:background="#ff0fb8a1"
         android:padding="4.0dip" >
@@ -24,37 +24,34 @@
             android:layout_height="30.0dip"
             android:textColor="#48cec0"
             android:text="@string/back"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:background="@drawable/round_rect_dark" />
 
         <TextView
             android:id="@+id/textView2"
+            android:layout_toStartOf="@id/textView1"
+            android:layout_toEndOf="@id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
             android:text=""
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:textAppearance="?android:textAppearanceMedium" />
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="14.0dip"
+            android:layout_marginEnd="14.0dip"
             android:text=""
+            android:gravity="center_vertical"
             android:textAppearance="?android:textAppearanceMedium" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/textView1"
-            android:src="@drawable/coin"
-            android:contentDescription="@string/app_name" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -62,8 +59,8 @@
         android:layout_width="wrap_content"
         android:layout_height="50.0dip"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true" >
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" >
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
@@ -77,8 +74,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/relativeLayout2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/relativeLayout1"
         android:orientation="vertical"
         android:weightSum="1.0" 
@@ -133,9 +130,9 @@
                 android:layout_height="55.0dip"
 
                 android:layout_alignBottom="@+id/imageView1"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:background="#6dc5f2"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:text="@string/ask"
@@ -146,17 +143,17 @@
                 android:layout_width="55.0dip"
                 android:layout_height="55.0dip"
                 android:layout_alignBottom="@+id/imageView1"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:background="@drawable/removeletterhint" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="55.0dip"
                 android:layout_height="55.0dip"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/imageView1"
                 android:background="#6dc5f2"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:text="@string/skip"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
@@ -165,7 +162,7 @@
                 android:id="@+id/button4"
                 android:layout_width="55.0dip"
                 android:layout_height="55.0dip"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignTop="@+id/imageView1"
                 android:background="@drawable/bombhint" />
         </RelativeLayout>
@@ -175,8 +172,8 @@
             <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:gravity="bottom"
             android:orientation="vertical" >
 
@@ -206,6 +203,7 @@
                     android:gravity="center"
                     android:text="@string/a"
                     android:textColor="#ffffff"
+                    style="?android:attr/borderlessButtonStyle"
                     android:textSize="32sp"
                     android:textStyle="bold" />
 
@@ -217,6 +215,7 @@
                     android:background="@drawable/wordbox"
                    android:text="@string/a"
                     android:textColor="#ffffff"
+                    style="?android:attr/borderlessButtonStyle"
                     android:textSize="32sp"
                     android:textStyle="bold" />
 
@@ -227,6 +226,7 @@
                     android:layout_weight="6"
                     android:background="@drawable/wordbox"
                     android:height="50dp"
+                    style="?android:attr/borderlessButtonStyle"
                    android:text="@string/a"
                     android:textColor="#ffffff"
                     android:textSize="32sp"
@@ -238,6 +238,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="6"
                     android:background="@drawable/wordbox"
+                    style="?android:attr/borderlessButtonStyle"
                     android:height="50dp"
                    android:text="@string/a"
                     android:textColor="#ffffff"
@@ -252,6 +253,7 @@
                     android:background="@drawable/wordbox"
                     android:height="50dp"
                    android:text="@string/a"
+                    style="?android:attr/borderlessButtonStyle"
                     android:textColor="#ffffff"
                     android:textSize="32sp"
                     android:textStyle="bold" />
@@ -264,6 +266,7 @@
                     android:background="@drawable/wordbox"
                     android:height="50dp"
                    android:text="@string/a"
+                    style="?android:attr/borderlessButtonStyle"
                     android:textColor="#ffffff"
                     android:textSize="32sp"
                     android:textStyle="bold" />
@@ -280,6 +283,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="6"
                     android:background="@drawable/wordbox"
+                    style="?android:attr/borderlessButtonStyle"
                     android:height="50dp"
                    android:text="@string/a"
                     android:textColor="#ffffff"
@@ -292,6 +296,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="6"
                     android:background="@drawable/wordbox"
+                    style="?android:attr/borderlessButtonStyle"
                     android:height="50dp"
                    android:text="@string/a"
                     android:textColor="#ffffff"
@@ -307,6 +312,7 @@
                     android:height="50dp"
                    android:text="@string/a"
                     android:textColor="#ffffff"
+                    style="?android:attr/borderlessButtonStyle"
                     android:textSize="32sp"
                     android:textStyle="bold" />
 
@@ -317,6 +323,7 @@
                     android:layout_weight="6"
                     android:background="@drawable/wordbox"
                     android:height="50dp"
+                    style="?android:attr/borderlessButtonStyle"
                    android:text="@string/a"
                     android:textColor="#ffffff"
                     android:textSize="32sp"
@@ -332,6 +339,7 @@
                    android:text="@string/a"
                     android:textColor="#ffffff"
                     android:textSize="32sp"
+                    style="?android:attr/borderlessButtonStyle"
                     android:textStyle="bold" />
 
                 <Button
@@ -341,6 +349,7 @@
                     android:layout_weight="6"
                     android:background="@drawable/wordbox"
                     android:height="50dp"
+                    style="?android:attr/borderlessButtonStyle"
                    android:text="@string/a"
                     android:textColor="#ffffff"
                     android:textSize="32sp"

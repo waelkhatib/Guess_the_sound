@@ -70,10 +70,6 @@
         <service android:name="com.google.android.gms.cast.framework.media.MediaNotificationService" />
         <service android:name="com.google.android.gms.cast.framework.ReconnectionService" />
 
-        <meta-data
-            android:name="android.support.VERSION"
-            android:value="26.1.0" />
-
         <receiver
             android:name="com.google.android.gms.analytics.AnalyticsReceiver"
             android:enabled="true"

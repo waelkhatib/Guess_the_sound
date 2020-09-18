@@ -36,7 +36,9 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
 import android.net.Uri;
@@ -51,6 +53,7 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -82,9 +85,8 @@ public class TheGame extends Activity {
 			"W", "X", "Y", "Z" };
 	private String[] word_array;
 	private String theWord = "999";
-	private String resultWord = "";
-	public Button[] randBtn;
-
+    public Button[] randBtn;
+	MediaPlayer suc,fal;
 
 	SoundPool soundPool;
 	Context mContext;
@@ -117,7 +119,8 @@ public class TheGame extends Activity {
 		mContext=TheGame.this;
 		sb = new StringBuilder();
 		sb.append(Environment.getExternalStorageDirectory().toString()).append(File.separator).append(getString(R.string.app_name));
-
+		suc=MediaPlayer.create(TheGame.this, R.raw.suc);
+		fal=MediaPlayer.create(TheGame.this, R.raw.fal);
 		txt_ribon=(TextView)findViewById(R.id.txt_ribon);
 		btn_first=(Button)findViewById(R.id.button5);
 		btn_bomb=(Button)findViewById(R.id.button4);
@@ -130,7 +133,18 @@ public class TheGame extends Activity {
 		animation.setFillAfter(false);
 		animation.setRepeatCount(0x186a0);
 		button.startAnimation(animation);
-
+		final TextView coins_txt = (TextView) findViewById(R.id.textView1);
+		coins_txt.getViewTreeObserver()
+				.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+					@Override
+					public void onGlobalLayout() {
+						Drawable img = getResources().getDrawable(
+								R.drawable.coin);
+						img.setBounds(0, 0, img.getIntrinsicWidth() * coins_txt.getMeasuredHeight() / img.getIntrinsicHeight(), coins_txt.getMeasuredHeight());
+						coins_txt.setCompoundDrawables(img, null, null, null);
+						coins_txt.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+					}
+				});
 		AdView adView = (AdView) this.findViewById(R.id.adView);
 		adView.loadAd(new AdRequest.Builder().build());
 
@@ -175,7 +189,7 @@ public class TheGame extends Activity {
 			randomChars();
 			TextView lvl_txt = (TextView) findViewById(R.id.textView2);
 			lvl_txt.setText(" " + lvl + " ");
-			TextView coins_txt = (TextView) findViewById(R.id.textView1);
+
 			coins_txt.setText(coins);
 		}
 		else
@@ -555,7 +569,7 @@ public class TheGame extends Activity {
 	// Function that check if the word is correct and showing correct/wrong
 	// dialog
 	private void createResult() {
-		resultWord = "";
+        String resultWord = "";
 		for (int i = 0; i < word_array.length; i++) {
 			if (word_btn[i].getText() != "") {
 				resultWord += word_btn[i].getText();
@@ -565,8 +579,10 @@ public class TheGame extends Activity {
 		if (resultWord.length() == word_array.length) {
 			if (resultWord.equalsIgnoreCase(theWord)) {
 				showMyDialog(1, null);
+				suc.start();
 			} else {
 				showMyDialog(2, null);
+				fal.start();
 			}
 		}
 	}

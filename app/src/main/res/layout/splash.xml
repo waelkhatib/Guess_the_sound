@@ -19,7 +19,7 @@
         android:id="@+id/imageView2"
         android:layout_width="180.0dip"
         android:layout_height="105.0dip"
-        android:layout_alignLeft="@+id/imageView1"
+        android:layout_alignStart="@+id/imageView1"
         android:layout_alignParentTop="true"
         android:layout_marginTop="14.0dip"
         android:src="@drawable/title" 
