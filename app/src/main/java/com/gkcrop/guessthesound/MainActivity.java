@@ -31,13 +31,7 @@ import android.Manifest;
 
 public class MainActivity extends Activity {
 
-	Button Facebook;
-	Button GooglePlayApps;
-	Button LetsPlay;
-	Context context;
-	//Button movieShadow;
-	Button resButton;
-    private InterstitialAd mInterstitial;
+	private InterstitialAd mInterstitial;
     private  final int INTERNET_FOR_STORE=1;
     private  final int ACCESS_NETWORK_STATE_FOR_STORE=2;
     private  final int INTERNET_FOR_FACEBOOK=3;
@@ -47,7 +41,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdView mAdView = findViewById(R.id.adView);
 		mAdView.loadAd(new AdRequest.Builder().build());
 
 		mInterstitial = new InterstitialAd(this);
@@ -67,13 +61,15 @@ public class MainActivity extends Activity {
 
 		if(!fileExist()){writeData("1|10");}
 
-		LetsPlay = (Button)findViewById(R.id.letsPlay);
-		GooglePlayApps = (Button)findViewById(R.id.AllAppsGoogle);
-		resButton = (Button)findViewById(R.id.restartGame);
-		Facebook = (Button)findViewById(R.id.button1);
-		context = this;
+		Button letsPlay = findViewById(R.id.letsPlay);
+		Button googlePlayApps = findViewById(R.id.AllAppsGoogle);
+		// --Commented out by Inspection (18/09/2020 20:47):private Context context;
+		//Button movieShadow;
+		Button resButton = findViewById(R.id.restartGame);
+		Button facebook = findViewById(R.id.button1);
+		//context = this;
 
-		LetsPlay.setOnClickListener(new View.OnClickListener() {
+		letsPlay.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -84,7 +80,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		GooglePlayApps.setOnClickListener(new View.OnClickListener() {
+		googlePlayApps.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -146,7 +142,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		Facebook.setOnClickListener(new View.OnClickListener() {
+		facebook.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -218,7 +214,7 @@ public class MainActivity extends Activity {
 					Intent.ACTION_VIEW,
 					Uri.parse(getString(R.string.facebook_url))));
 		}else {
-			createDialog(R.string.warning,R.string.you_must_have_internet_access);
+			createDialog(R.string.you_must_have_internet_access);
 		}
 	}
 
@@ -228,14 +224,14 @@ public class MainActivity extends Activity {
 					Intent.ACTION_VIEW,
 					Uri.parse(getString(R.string.play_more_apps))));
 		}else {
-			createDialog(R.string.warning,R.string.you_must_turn_on_mobile_data);
+			createDialog(R.string.you_must_turn_on_mobile_data);
 		}
 	}
 
-	private void createDialog(int titleId,int messageId) {
+	private void createDialog(int messageId) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(
 				MainActivity.this);
-		alert.setTitle(getString(titleId));
+		alert.setTitle(getString(R.string.warning));
 		alert.setMessage(getString(messageId));
 
 		alert.setPositiveButton(getString(R.string.ok),
@@ -258,7 +254,7 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	public boolean isConnected(boolean is_data) {
+	private boolean isConnected(boolean is_data) {
 		boolean connected = false;
 		try {
 			ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -274,7 +270,7 @@ public class MainActivity extends Activity {
 		return connected;
 	}
 
-	public boolean fileExist(){
+	private boolean fileExist(){
 		File file = new File(getFilesDir()+File.separator+"thewords.dat");
 		return file.exists();
 	}
@@ -285,7 +281,7 @@ public class MainActivity extends Activity {
 			outputStreamWriter.write(dataStr);
 			outputStreamWriter.close();
 		}
-		catch (IOException e) {} 
+		catch (IOException ignored) {}
 
 	}
 

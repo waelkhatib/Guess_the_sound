@@ -3,26 +3,25 @@ package com.gkcrop.guessthesound;
 import java.util.ArrayList;
 
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class LevelSAXParserHandler extends DefaultHandler {
+class LevelSAXParserHandler extends DefaultHandler {
 
-	boolean currentElement = false;
-	String currentValue = "";
-	Level productInfo;
-	ArrayList<Level> cartList;
+	private boolean currentElement = false;
+	private String currentValue = "";
+	private Level productInfo;
+	private final ArrayList<Level> cartList;
 
 	public LevelSAXParserHandler() {
 		// TODO Auto-generated constructor stub
-		 cartList = new ArrayList<Level>();
+		 cartList = new ArrayList<>();
 	}
 	public ArrayList<Level> getCartList() {
 		return cartList;
 	}
 
 	public void startElement(String uri, String localName, String qName,
-			Attributes attributes) throws SAXException {
+			Attributes attributes) {
 
 		currentElement = true;
 		
@@ -32,14 +31,11 @@ public class LevelSAXParserHandler extends DefaultHandler {
 
 	}
 
-	public void endElement(String uri, String localName, String qName)
-			throws SAXException {
+	public void endElement(String uri, String localName, String qName) {
 
 		currentElement = false;
 
-		if (qName.equalsIgnoreCase("levelNumber"))
-			productInfo.setLevelNumber(currentValue.trim());
-		else if (qName.equalsIgnoreCase("musicId"))
+		if (qName.equalsIgnoreCase("musicId"))
 			productInfo.setMusicId(currentValue.trim());
 		else if (qName.equalsIgnoreCase("ribbon"))
 			productInfo.setRibbon(currentValue.trim());
@@ -51,8 +47,7 @@ public class LevelSAXParserHandler extends DefaultHandler {
 		currentValue = "";
 	}
 
-	public void characters(char[] ch, int start, int length)
-			throws SAXException {
+	public void characters(char[] ch, int start, int length) {
 
 		if (currentElement) {
 			currentValue = currentValue + new String(ch, start, length);

@@ -37,6 +37,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -57,17 +58,14 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.loopj.android.image.SmartImageView;
 import android.Manifest;
 
@@ -75,28 +73,33 @@ import android.Manifest;
 @SuppressLint("NewApi")
 public class TheGame extends Activity {
 	private static final int MY_PERMISSIONS_WRITE =12 ;
-	// Variables
-	InterstitialAd interstitial;
+// --Commented out by Inspection START (18/09/2020 20:47):
+//	// Variables
+//	InterstitialAd interstitial;
+// --Commented out by Inspection STOP (18/09/2020 20:47)
 	private Button[] word_btn;
 	private String lvl = "0";
 	private String coins = "0";
-	private String[] chars = { "A", "B", "C", "D", "E", "F", "G", "H", "I",
+	private final String[] chars = { "A", "B", "C", "D", "E", "F", "G", "H", "I",
 			"J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
 			"W", "X", "Y", "Z" };
 	private String[] word_array;
 	private String theWord = "999";
-    public Button[] randBtn;
-	MediaPlayer suc,fal;
+    private Button[] randBtn;
+	private MediaPlayer suc;
+    private MediaPlayer fal;
 
-	SoundPool soundPool;
-	Context mContext;
-	String SoundFile,Ribbon;
-	TextView txt_ribon;
+	private SoundPool soundPool;
+    private String SoundFile;
+    private String Ribbon;
 
-	Button btn_first,btn_bomb,btn_skip,btn_back,btn_ask;
-	boolean loaded = false,isLast=false;
+    private Button btn_first;
+    private Button btn_bomb;
+    private Button btn_skip;
+    private boolean loaded = false;
+    private boolean isLast=false;
 	private int soundID,Count=0;
-	StringBuilder sb;
+	private StringBuilder sb;
 	public TheGame() {
 		// TODO Auto-generated constructor stub
 
@@ -105,35 +108,33 @@ public class TheGame extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
-		if (Integer.valueOf(android.os.Build.VERSION.SDK_INT) >= 9) {
-			try {
-				StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-				.permitAll().build();
-				StrictMode.setThreadPolicy(policy);
-			} catch (Exception e) {
-			}
-		}
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+            .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        } catch (Exception ignored) {
+        }
 
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_layout);
-		mContext=TheGame.this;
+        Context mContext = TheGame.this;
 		sb = new StringBuilder();
 		sb.append(Environment.getExternalStorageDirectory().toString()).append(File.separator).append(getString(R.string.app_name));
 		suc=MediaPlayer.create(TheGame.this, R.raw.suc);
 		fal=MediaPlayer.create(TheGame.this, R.raw.fal);
-		txt_ribon=(TextView)findViewById(R.id.txt_ribon);
-		btn_first=(Button)findViewById(R.id.button5);
-		btn_bomb=(Button)findViewById(R.id.button4);
-		btn_skip=(Button)findViewById(R.id.button3);
-		btn_back=(Button)findViewById(R.id.button1);
-		btn_ask=(Button)findViewById(R.id.button6);
+        TextView txt_ribon = findViewById(R.id.txt_ribon);
+		btn_first= findViewById(R.id.button5);
+		btn_bomb= findViewById(R.id.button4);
+		btn_skip= findViewById(R.id.button3);
+        Button btn_back = findViewById(R.id.button1);
+        Button btn_ask = findViewById(R.id.button6);
 
-		Button button = (Button)findViewById(R.id.button8);
+		Button button = findViewById(R.id.button8);
 		Animation animation = AnimationUtils.loadAnimation(this, R.anim.rippleanimset);
 		animation.setFillAfter(false);
 		animation.setRepeatCount(0x186a0);
 		button.startAnimation(animation);
-		final TextView coins_txt = (TextView) findViewById(R.id.textView1);
+		final TextView coins_txt = findViewById(R.id.textView1);
 		coins_txt.getViewTreeObserver()
 				.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 					@Override
@@ -145,31 +146,37 @@ public class TheGame extends Activity {
 						coins_txt.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 					}
 				});
-		AdView adView = (AdView) this.findViewById(R.id.adView);
+		AdView adView = this.findViewById(R.id.adView);
 		adView.loadAd(new AdRequest.Builder().build());
 
 
 		// 12 orange buttons where appear letters of the word, and other letters
-		randBtn = new Button[] { (Button) findViewById(R.id.char1),
-				(Button) findViewById(R.id.char2),
-				(Button) findViewById(R.id.char3),
-				(Button) findViewById(R.id.char4),
-				(Button) findViewById(R.id.char5),
-				(Button) findViewById(R.id.char6),
-				(Button) findViewById(R.id.char7),
-				(Button) findViewById(R.id.char8),
-				(Button) findViewById(R.id.char9),
-				(Button) findViewById(R.id.char10),
-				(Button) findViewById(R.id.char11),
-				(Button) findViewById(R.id.char12) };
-		Intent intent = getIntent();
+		randBtn = new Button[] {findViewById(R.id.char1),
+                findViewById(R.id.char2),
+                findViewById(R.id.char3),
+                findViewById(R.id.char4),
+                findViewById(R.id.char5),
+                findViewById(R.id.char6),
+                findViewById(R.id.char7),
+                findViewById(R.id.char8),
+                findViewById(R.id.char9),
+                findViewById(R.id.char10),
+                findViewById(R.id.char11),
+                findViewById(R.id.char12)};
+
 		lvl = readData().split("\\|")[0];
 		coins = readData().split("\\|")[1];
 		if (Integer.parseInt(coins) < 0) {
 			coins = "0";
 		}
 		parseXML(Integer.parseInt(lvl)-1);
-		soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        AudioAttributes attr = new AudioAttributes.Builder()
+                .setLegacyStreamType(AudioManager.STREAM_MUSIC)
+                .build();
+		soundPool =new SoundPool.Builder()
+                .setMaxStreams(10)
+                .setAudioAttributes(attr)
+                .build();
 		if(!isLast)
 		{
 
@@ -187,8 +194,8 @@ public class TheGame extends Activity {
 			word_array = getWord(theWord);
 			createWord(word_array.length);
 			randomChars();
-			TextView lvl_txt = (TextView) findViewById(R.id.textView2);
-			lvl_txt.setText(" " + lvl + " ");
+			TextView lvl_txt = findViewById(R.id.textView2);
+			lvl_txt.setText(String.format("%s%s%s"," ",lvl," "));
 
 			coins_txt.setText(coins);
 		}
@@ -219,7 +226,7 @@ public class TheGame extends Activity {
 		}
 
 
-		((Button)findViewById(R.id.button7)).setOnClickListener(new android.view.View.OnClickListener() {
+		findViewById(R.id.button7).setOnClickListener(new android.view.View.OnClickListener() {
 
 			public void onClick(View view)
 			{
@@ -259,7 +266,7 @@ public class TheGame extends Activity {
 							if (Integer.parseInt(coins) >= Integer.parseInt(getString(R.string.how_much_for_first_letter))) {
 								btn_first.setVisibility(View.INVISIBLE);
 								coins = "" + (Integer.parseInt(coins) - Integer.parseInt(getString(R.string.how_much_for_first_letter)));
-								TextView coins_txt = (TextView) findViewById(R.id.textView1);
+								TextView coins_txt = findViewById(R.id.textView1);
 								coins_txt.setText(coins);
 								writeData("" + (Integer.parseInt(lvl)) + "|"
 										+ (Integer.parseInt(coins)));
@@ -315,7 +322,7 @@ public class TheGame extends Activity {
 							if (Integer.parseInt(coins) >= Integer.parseInt(getString(R.string.how_much_for_bomb))) {
 								btn_bomb.setVisibility(View.INVISIBLE);
 								coins = "" + (Integer.parseInt(coins) - Integer.parseInt(getString(R.string.how_much_for_bomb)));
-								TextView coins_txt = (TextView) findViewById(R.id.textView1);
+								TextView coins_txt = findViewById(R.id.textView1);
 								coins_txt.setText(coins);
 								writeData("" + (Integer.parseInt(lvl)) + "|"
 										+ (Integer.parseInt(coins)));
@@ -359,7 +366,7 @@ public class TheGame extends Activity {
 							if (Integer.parseInt(coins) >= Integer.parseInt(getString(R.string.how_much_for_skip))) {
 								btn_skip.setVisibility(View.INVISIBLE);
 								coins = "" + (Integer.parseInt(coins) - Integer.parseInt(getString(R.string.how_much_for_skip)));
-								TextView coins_txt = (TextView) findViewById(R.id.textView1);
+								TextView coins_txt = findViewById(R.id.textView1);
 								coins_txt.setText(coins);
 								writeData("" + (Integer.parseInt(lvl) + 1) + "|"
 										+ (Integer.parseInt(coins)));
@@ -464,7 +471,7 @@ public class TheGame extends Activity {
 			in.close();
 			out.close();
 		}
-		catch (Exception e) {}
+		catch (Exception ignored) {}
 
 		Intent share = new Intent(Intent.ACTION_SEND_MULTIPLE);
 		share.setType("*/*");
@@ -474,12 +481,7 @@ public class TheGame extends Activity {
 		startActivity(Intent.createChooser(share, "Share level"));
 	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
-	}
-
-	@Override
+    @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	}
 
@@ -492,7 +494,7 @@ public class TheGame extends Activity {
 	// Function that generate black squares, depending on the number of letters
 	// in the word
 	private void createWord(int length) {
-		LinearLayout world_layout = (LinearLayout) findViewById(R.id.world_layout);
+		LinearLayout world_layout = findViewById(R.id.world_layout);
 		LayoutParams param = new LinearLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, length);
 
@@ -517,21 +519,21 @@ public class TheGame extends Activity {
 		for (int i = 0; i < 12; i++) {
 			randBtn[i].setOnClickListener(randCharClick(randBtn[i]));
 			Random r = new Random();
-			int i1 = r.nextInt(25 - 0) + 0;
+			int i1 = r.nextInt(25);
 			randBtn[i].setText(chars[i1]);
 		}
 
-		List<Integer> list = new LinkedList<Integer>();
+		List<Integer> list = new LinkedList<>();
 		for (int i = 0; i < 12; i++) {
 			list.add(i);
 		}
 
 		Collections.shuffle(list);
 
-		for (int x = 0; x < word_array.length; x++) {
-			int value = list.remove(0);
-			randBtn[value].setText(word_array[x].toUpperCase());
-		}
+        for (String aWord_array : word_array) {
+            int value = list.remove(0);
+            randBtn[value].setText(aWord_array.toUpperCase());
+        }
 	}
 
 	// Fuction that clear wrong letter from black squares
@@ -569,19 +571,20 @@ public class TheGame extends Activity {
 	// Function that check if the word is correct and showing correct/wrong
 	// dialog
 	private void createResult() {
-        String resultWord = "";
+        String resultWord;
+        StringBuilder stringBuilder=new StringBuilder();
 		for (int i = 0; i < word_array.length; i++) {
 			if (word_btn[i].getText() != "") {
-				resultWord += word_btn[i].getText();
+				stringBuilder.append( word_btn[i].getText());
 			}
 		}
-
+         resultWord=stringBuilder.toString();
 		if (resultWord.length() == word_array.length) {
 			if (resultWord.equalsIgnoreCase(theWord)) {
-				showMyDialog(1, null);
+				showMyDialog(1);
 				suc.start();
 			} else {
-				showMyDialog(2, null);
+				showMyDialog(2);
 				fal.start();
 			}
 		}
@@ -590,16 +593,13 @@ public class TheGame extends Activity {
 	// Function that transform the word to array
 	private String[] getWord(String str) {
 		String[] chars = str.split("");
-		List<String> selected_chars = new ArrayList<String>();
-		for (int i = 0; i < chars.length; i++) {
-			selected_chars.add(chars[i]);
-		}
+        List<String> selected_chars = new ArrayList<>(Arrays.asList(chars));
 		selected_chars.remove(0);
-		return selected_chars.toArray(new String[selected_chars.size()]);
+		return selected_chars.toArray(new String[0]);
 	}
 
 	// //Function that showing dialogs: correct, wrong or zooming image
-	private void showMyDialog(final int type, String bmp) {
+	private void showMyDialog(final int type) {
 		final Dialog dialog = new Dialog(TheGame.this, R.style.dialogStyle);
 		dialog.setContentView(R.layout.dialog);
 		dialog.getWindow().getDecorView()
@@ -609,16 +609,16 @@ public class TheGame extends Activity {
 				LayoutParams.WRAP_CONTENT);
 		String points = ""
 				+ ((new Random().nextInt(10 - 3) + 3) + word_array.length);
-		SmartImageView image = (SmartImageView) dialog
+		SmartImageView image = dialog
 				.findViewById(R.id.imageDialog);
-		Button dialogBtn = (Button) dialog.findViewById(R.id.dialogBtn);
+		Button dialogBtn = dialog.findViewById(R.id.dialogBtn);
 		dialogBtn.setGravity(Gravity.CENTER);
-		TextView score = (TextView) dialog.findViewById(R.id.points);
+		TextView score = dialog.findViewById(R.id.points);
 
 		if (type == 1) {
 			image.setImageResource(R.drawable.corect);
 			dialogBtn.setText(R.string.continue1); // Next level button
-			score.setText("+" + points);
+			score.setText(String.format("%s%s","+" , points));
 			writeData("" + (Integer.parseInt(lvl) + 1) + "|"
 					+ (Integer.parseInt(coins) + Integer.parseInt(points)));
 		} else if (type == 2) {
@@ -638,10 +638,7 @@ public class TheGame extends Activity {
 					new ColorDrawable(android.graphics.Color.TRANSPARENT));
 			score.setVisibility(View.GONE);
 			dialogBtn.setVisibility(View.GONE);
-			ImageView coinicon = (ImageView) dialog
-					.findViewById(R.id.dialogIcon);
-			coinicon.setVisibility(View.GONE);
-			image.setImageUrl(bmp);
+			image.setImageUrl(null);
 			image.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -688,7 +685,7 @@ public class TheGame extends Activity {
 					openFileOutput("thewords.dat", Context.MODE_PRIVATE));
 			outputStreamWriter.write(dataStr);
 			outputStreamWriter.close();
-		} catch (IOException e) {
+		} catch (IOException ignored) {
 		}
 	}
 
@@ -702,7 +699,7 @@ public class TheGame extends Activity {
 						inputStream);
 				BufferedReader bufferedReader = new BufferedReader(
 						inputStreamReader);
-				String receiveString = "";
+				String receiveString;
 				StringBuilder stringBuilder = new StringBuilder();
 				while ((receiveString = bufferedReader.readLine()) != null) {
 					stringBuilder.append(receiveString);
@@ -710,8 +707,7 @@ public class TheGame extends Activity {
 				inputStream.close();
 				ret = stringBuilder.toString();
 			}
-		} catch (FileNotFoundException e) {
-		} catch (IOException e) {
+		} catch (IOException ignored) {
 		}
 		return ret;
 	}
@@ -719,21 +715,21 @@ public class TheGame extends Activity {
 
 
 	// Function that hide 3 orange buttons (letters)
-	public void remove3Chars() {
-		Button[] removeBtn = { (Button) findViewById(R.id.char1),
-				(Button) findViewById(R.id.char2),
-				(Button) findViewById(R.id.char3),
-				(Button) findViewById(R.id.char4),
-				(Button) findViewById(R.id.char5),
-				(Button) findViewById(R.id.char6),
-				(Button) findViewById(R.id.char7),
-				(Button) findViewById(R.id.char8),
-				(Button) findViewById(R.id.char9),
-				(Button) findViewById(R.id.char10),
-				(Button) findViewById(R.id.char11),
-				(Button) findViewById(R.id.char12) };
+    private void remove3Chars() {
+		Button[] removeBtn = {findViewById(R.id.char1),
+                findViewById(R.id.char2),
+                findViewById(R.id.char3),
+                findViewById(R.id.char4),
+                findViewById(R.id.char5),
+                findViewById(R.id.char6),
+                findViewById(R.id.char7),
+                findViewById(R.id.char8),
+                findViewById(R.id.char9),
+                findViewById(R.id.char10),
+                findViewById(R.id.char11),
+                findViewById(R.id.char12)};
 		int x = 0;
-		List<Integer> list = new LinkedList<Integer>();
+		List<Integer> list = new LinkedList<>();
 		for (int i = 0; i < 12; i++) {
 			list.add(i);
 		}
@@ -781,10 +777,10 @@ public class TheGame extends Activity {
 		}
 	}
 
-	public String SaveBackground()
+	private String SaveBackground()
 	{
 		Bitmap bitmap;
-		RelativeLayout panelResult = (RelativeLayout) findViewById(R.id.root);
+		RelativeLayout panelResult = findViewById(R.id.root);
 		panelResult.invalidate();
 		panelResult.setDrawingCacheEnabled(true);
 		panelResult.buildDrawingCache();
@@ -794,16 +790,12 @@ public class TheGame extends Activity {
 		int j = displaymetrics.widthPixels;
 		bitmap = Bitmap.createScaledBitmap(Bitmap.createBitmap(panelResult.getDrawingCache()), j, i, true);
 		panelResult.setDrawingCacheEnabled(false);
-		String s = null;
+		String s;
 		File file;
-		boolean flag;
+	//	boolean flag;
 		file = new File(sb.toString());
-		flag = file.isDirectory();
-		s = null;
-		if (flag)
-		{
-		}
-		file.mkdir();
+	//	flag = file.isDirectory();
+        file.mkdir();
 		FileOutputStream fileoutputstream1 = null;
 		s = (new StringBuilder(String.valueOf("guess"))).append("_sound_").append(System.currentTimeMillis()).append(".png").toString();
 		try {

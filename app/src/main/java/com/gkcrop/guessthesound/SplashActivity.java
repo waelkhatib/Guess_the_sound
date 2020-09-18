@@ -10,14 +10,13 @@ import android.widget.ImageView;
 
 public class SplashActivity extends Activity
 {
-	ImageView img_logo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
-		img_logo=(ImageView)findViewById(R.id.imageView1);
+		ImageView img_logo = findViewById(R.id.imageView1);
 		Animation fadeIn = new AlphaAnimation(0, 1);
 		fadeIn.setInterpolator(new AccelerateInterpolator()); //add this
 		fadeIn.setDuration(500);

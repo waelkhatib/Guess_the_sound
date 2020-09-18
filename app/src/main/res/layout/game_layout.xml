@@ -3,10 +3,10 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/white"
+    style="@style/white_style"
     android:orientation="vertical"
     android:weightSum="1.0"
-    android:id="@+id/root" >
+    android:id="@+id/root">
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -78,15 +78,15 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/relativeLayout1"
         android:orientation="vertical"
-        android:weightSum="1.0" 
+        android:weightSum="1.0"
         android:id="@+id/main">
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5" >
-            
-            <TextView 
+            android:layout_height="0dp"
+            android:layout_weight="0.75" >
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -97,7 +97,7 @@
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 android:textSize="18sp"/>
-            
+
 
             <RelativeLayout
                 android:id="@+id/imageView1"
@@ -167,14 +167,14 @@
                 android:background="@drawable/bombhint" />
         </RelativeLayout>
 
-        
 
-            <LinearLayout
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:gravity="bottom"
+
             android:orientation="vertical" >
 
             <LinearLayout
@@ -188,173 +188,221 @@
                 android:paddingTop="10dp" >
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center" >
+                >
+                <GridLayout
+                    android:id="@+id/g1"
+                    ads:layout_constraintGuide_percent="0"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <GridLayout
+                    android:id="@+id/g2"
+                    ads:layout_constraintGuide_percent="0.167"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <GridLayout
+                    android:id="@+id/g3"
+                    ads:layout_constraintGuide_percent="0.334"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <GridLayout
+                    android:id="@+id/g4"
+                    ads:layout_constraintGuide_percent="0.501"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <GridLayout
+                    android:id="@+id/g5"
+                    ads:layout_constraintGuide_percent="0.668"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <GridLayout
+                    android:id="@+id/g6"
+                    ads:layout_constraintGuide_percent="0.835"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <GridLayout
+                    android:id="@+id/g7"
+                    ads:layout_constraintGuide_percent="1"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <Button
                     android:id="@+id/char1"
-                    android:layout_width="wrap_content"
+                    ads:layout_constraintStart_toEndOf="@id/g1"
+                    ads:layout_constraintEnd_toStartOf="@id/g2"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:layout_weight="6"
                     android:background="@drawable/wordbox"
                     android:gravity="center"
                     android:text="@string/a"
                     android:textColor="#ffffff"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+                <Button
+                    android:id="@+id/char7"
+                    ads:layout_constraintStart_toEndOf="@id/g1"
+                    ads:layout_constraintEnd_toStartOf="@id/g2"
+                    ads:layout_constraintTop_toBottomOf="@id/char1"
                     style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/wordbox"
+                    android:gravity="center"
+                    android:text="@string/a"
+                    android:textColor="#ffffff"
                     android:textSize="32sp"
                     android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/char2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="6"
-                    android:background="@drawable/wordbox"
-                   android:text="@string/a"
-                    android:textColor="#ffffff"
+                    ads:layout_constraintStart_toEndOf="@id/g2"
+                    ads:layout_constraintEnd_toStartOf="@id/g3"
                     style="?android:attr/borderlessButtonStyle"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/char3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:layout_weight="6"
                     android:background="@drawable/wordbox"
-                    android:height="50dp"
-                    style="?android:attr/borderlessButtonStyle"
-                   android:text="@string/a"
+                    android:gravity="center"
+                    android:text="@string/a"
                     android:textColor="#ffffff"
                     android:textSize="32sp"
                     android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/char4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="6"
-                    android:background="@drawable/wordbox"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:height="50dp"
-                   android:text="@string/a"
-                    android:textColor="#ffffff"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/char5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="6"
-                    android:background="@drawable/wordbox"
-                    android:height="50dp"
-                   android:text="@string/a"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:textColor="#ffffff"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/char6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="6"
-                    android:background="@drawable/wordbox"
-                    android:height="50dp"
-                   android:text="@string/a"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:textColor="#ffffff"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center" >
-
-                <Button
-                    android:id="@+id/char7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="6"
-                    android:background="@drawable/wordbox"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:height="50dp"
-                   android:text="@string/a"
-                    android:textColor="#ffffff"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
-
                 <Button
                     android:id="@+id/char8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="6"
-                    android:background="@drawable/wordbox"
+                    ads:layout_constraintStart_toEndOf="@id/g2"
+                    ads:layout_constraintEnd_toStartOf="@id/g3"
+                    ads:layout_constraintTop_toBottomOf="@id/char2"
                     style="?android:attr/borderlessButtonStyle"
-                    android:height="50dp"
-                   android:text="@string/a"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/wordbox"
+                    android:gravity="center"
+                    android:text="@string/a"
                     android:textColor="#ffffff"
                     android:textSize="32sp"
                     android:textStyle="bold" />
-
+                <Button
+                    android:id="@+id/char3"
+                    ads:layout_constraintStart_toEndOf="@id/g3"
+                    ads:layout_constraintEnd_toStartOf="@id/g4"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/wordbox"
+                    android:gravity="center"
+                    android:text="@string/a"
+                    android:textColor="#ffffff"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
                 <Button
                     android:id="@+id/char9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="6"
-                    android:background="@drawable/wordbox"
-                    android:height="50dp"
-                   android:text="@string/a"
-                    android:textColor="#ffffff"
+                    ads:layout_constraintStart_toEndOf="@id/g3"
+                    ads:layout_constraintEnd_toStartOf="@id/g4"
+                    ads:layout_constraintTop_toBottomOf="@id/char3"
                     style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/wordbox"
+                    android:gravity="center"
+                    android:text="@string/a"
+                    android:textColor="#ffffff"
                     android:textSize="32sp"
                     android:textStyle="bold" />
-
+                <Button
+                    android:id="@+id/char4"
+                    ads:layout_constraintStart_toEndOf="@id/g4"
+                    ads:layout_constraintEnd_toStartOf="@id/g5"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/wordbox"
+                    android:gravity="center"
+                    android:text="@string/a"
+                    android:textColor="#ffffff"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
                 <Button
                     android:id="@+id/char10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="6"
-                    android:background="@drawable/wordbox"
-                    android:height="50dp"
+                    ads:layout_constraintTop_toBottomOf="@id/char4"
+                    ads:layout_constraintStart_toEndOf="@id/g4"
+                    ads:layout_constraintEnd_toStartOf="@id/g5"
                     style="?android:attr/borderlessButtonStyle"
-                   android:text="@string/a"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/wordbox"
+                    android:gravity="center"
+                    android:text="@string/a"
                     android:textColor="#ffffff"
                     android:textSize="32sp"
                     android:textStyle="bold" />
-
+                <Button
+                    android:id="@+id/char5"
+                    ads:layout_constraintStart_toEndOf="@id/g5"
+                    ads:layout_constraintEnd_toStartOf="@id/g6"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/wordbox"
+                    android:gravity="center"
+                    android:text="@string/a"
+                    android:textColor="#ffffff"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
                 <Button
                     android:id="@+id/char11"
-                    android:layout_width="wrap_content"
+                    ads:layout_constraintTop_toBottomOf="@id/char5"
+                    ads:layout_constraintStart_toEndOf="@id/g5"
+                    ads:layout_constraintEnd_toStartOf="@id/g6"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:layout_weight="6"
                     android:background="@drawable/wordbox"
-                    android:height="50dp"
-                   android:text="@string/a"
+                    android:gravity="center"
+                    android:text="@string/a"
                     android:textColor="#ffffff"
                     android:textSize="32sp"
-                    style="?android:attr/borderlessButtonStyle"
                     android:textStyle="bold" />
-
+                <Button
+                    android:id="@+id/char6"
+                    ads:layout_constraintStart_toEndOf="@id/g6"
+                    ads:layout_constraintEnd_toStartOf="@id/g7"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/wordbox"
+                    android:gravity="center"
+                    android:text="@string/a"
+                    android:textColor="#ffffff"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
                 <Button
                     android:id="@+id/char12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="6"
-                    android:background="@drawable/wordbox"
-                    android:height="50dp"
+                    ads:layout_constraintTop_toBottomOf="@id/char6"
+                    ads:layout_constraintStart_toEndOf="@id/g6"
+                    ads:layout_constraintEnd_toStartOf="@id/g7"
                     style="?android:attr/borderlessButtonStyle"
-                   android:text="@string/a"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/wordbox"
+                    android:gravity="center"
+                    android:text="@string/a"
                     android:textColor="#ffffff"
                     android:textSize="32sp"
                     android:textStyle="bold" />
-            </LinearLayout>
+
+
+            </android.support.constraint.ConstraintLayout>
+
         </LinearLayout>
     </LinearLayout>
 
