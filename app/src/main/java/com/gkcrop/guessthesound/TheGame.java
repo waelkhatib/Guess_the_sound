@@ -9,12 +9,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.ref.WeakReference;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -34,6 +38,7 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -43,6 +48,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -60,6 +66,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -119,6 +126,8 @@ public class TheGame extends Activity {
 		setContentView(R.layout.game_layout);
         Context mContext = TheGame.this;
 		sb = new StringBuilder();
+        ((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable()
+                .setColorFilter(ContextCompat.getColor(this, R.color.main_bg), PorterDuff.Mode.SRC_IN );
 		sb.append(Environment.getExternalStorageDirectory().toString()).append(File.separator).append(getString(R.string.app_name));
 		suc=MediaPlayer.create(TheGame.this, R.raw.suc);
 		fal=MediaPlayer.create(TheGame.this, R.raw.fal);
@@ -220,6 +229,7 @@ public class TheGame extends Activity {
 					TheGame.this.finish();
 				}
 			});
+
 			AlertDialog alert = builder.create();
 			alert.setCancelable(false);
 			alert.show();
@@ -454,31 +464,9 @@ public class TheGame extends Activity {
 	}
 
 	private void shareLevel() {
-		ArrayList<Uri> uris = new ArrayList<>();
-		String path=SaveBackground();
-		File dest = Environment.getExternalStorageDirectory();
-		InputStream in = getResources().openRawResource(getResources().getIdentifier(SoundFile,"raw",getPackageName()));
 
-		try
-		{
-			OutputStream out = new FileOutputStream(new File(dest, SoundFile+".mp3"));
-			byte[] buf = new byte[1024];
-			int len;
-			while ( (len = in.read(buf, 0, buf.length)) != -1)
-			{
-				out.write(buf, 0, len);
-			}
-			in.close();
-			out.close();
-		}
-		catch (Exception ignored) {}
+        new ShareLevelTask(this).execute();
 
-		Intent share = new Intent(Intent.ACTION_SEND_MULTIPLE);
-		share.setType("*/*");
-		uris.add(Uri.parse(path));
-		uris.add(Uri.parse(Environment.getExternalStorageDirectory().toString() + "/"+SoundFile+".mp3"));
-		share.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
-		startActivity(Intent.createChooser(share, "Share level"));
 	}
 
     @Override
@@ -518,7 +506,7 @@ public class TheGame extends Activity {
 	private void randomChars() {
 		for (int i = 0; i < 12; i++) {
 			randBtn[i].setOnClickListener(randCharClick(randBtn[i]));
-			Random r = new Random();
+			SecureRandom r = new SecureRandom();
 			int i1 = r.nextInt(25);
 			randBtn[i].setText(chars[i1]);
 		}
@@ -605,10 +593,11 @@ public class TheGame extends Activity {
 		dialog.getWindow().getDecorView()
 		.setBackgroundResource(R.drawable.dialog_bg);
 		dialog.setCanceledOnTouchOutside(false);
+		dialog.setCancelable(false);
 		dialog.getWindow().setLayout(LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT);
 		String points = ""
-				+ ((new Random().nextInt(10 - 3) + 3) + word_array.length);
+				+ ((new SecureRandom().nextInt(10 - 3) + 3) + word_array.length);
 		SmartImageView image = dialog
 				.findViewById(R.id.imageDialog);
 		Button dialogBtn = dialog.findViewById(R.id.dialogBtn);
@@ -777,51 +766,63 @@ public class TheGame extends Activity {
 		}
 	}
 
-	private String SaveBackground()
-	{
-		Bitmap bitmap;
-		RelativeLayout panelResult = findViewById(R.id.root);
-		panelResult.invalidate();
-		panelResult.setDrawingCacheEnabled(true);
-		panelResult.buildDrawingCache();
-		DisplayMetrics displaymetrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-		int i = displaymetrics.heightPixels;
-		int j = displaymetrics.widthPixels;
-		bitmap = Bitmap.createScaledBitmap(Bitmap.createBitmap(panelResult.getDrawingCache()), j, i, true);
-		panelResult.setDrawingCacheEnabled(false);
-		String s;
-		File file;
-	//	boolean flag;
-		file = new File(sb.toString());
-	//	flag = file.isDirectory();
+    private String SaveBackground()
+    {
+        Bitmap bitmap;
+        FutureTask<Bitmap> futureTask=new FutureTask<>(new Callable<Bitmap>() {
+            @Override
+            public Bitmap call() {
+                RelativeLayout panelResult = findViewById(R.id.root);
+                panelResult.invalidate();
+                panelResult.setDrawingCacheEnabled(true);
+                panelResult.buildDrawingCache();
+                DisplayMetrics displaymetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+                int i = displaymetrics.heightPixels;
+                int j = displaymetrics.widthPixels;
+                Bitmap bitmap= Bitmap.createScaledBitmap(Bitmap.createBitmap(panelResult.getDrawingCache()), j, i, true);
+                panelResult.setDrawingCacheEnabled(false);
+                return bitmap;
+            }
+        });
+        runOnUiThread(futureTask);
+        try {
+            bitmap=futureTask.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
+        }
+        String s;
+        File file;
+
+        file = new File(sb.toString());
+        file.isDirectory();
         file.mkdir();
-		FileOutputStream fileoutputstream1 = null;
-		s = (new StringBuilder(String.valueOf("guess"))).append("_sound_").append(System.currentTimeMillis()).append(".png").toString();
-		try {
-			fileoutputstream1 = new FileOutputStream(new File(file, s));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		FileOutputStream fileoutputstream = fileoutputstream1;
+        FileOutputStream fileoutputstream1 = null;
+        s = (new StringBuilder(String.valueOf("guess"))).append("_sound_").append(System.currentTimeMillis()).append(".png").toString();
+        try {
+            fileoutputstream1 = new FileOutputStream(new File(file, s));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        FileOutputStream fileoutputstream = fileoutputstream1;
 
-		StringBuilder stringbuilder1;
-		bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, fileoutputstream);
-		stringbuilder1 = new StringBuilder();
-		stringbuilder1.append(sb.toString()).append(File.separator).append(s);
+        StringBuilder stringbuilder1;
+        bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, fileoutputstream);
+        stringbuilder1 = new StringBuilder();
+        stringbuilder1.append(sb.toString()).append(File.separator).append(s);
 
-		try {
-			fileoutputstream.flush();
-			fileoutputstream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        try {
+            fileoutputstream.flush();
+            fileoutputstream.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		return ""+stringbuilder1;
+        return ""+stringbuilder1;
 
-	}
+    }
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		if (requestCode == MY_PERMISSIONS_WRITE && grantResults.length > 0
@@ -829,4 +830,53 @@ public class TheGame extends Activity {
 		shareLevel();
 		}
 	}
+    private static 	class ShareLevelTask extends AsyncTask<Void,Void,String> {
+        private final WeakReference<TheGame> activityReference;
+
+        // only retain a weak reference to the activity
+        ShareLevelTask(TheGame context) {
+            activityReference = new WeakReference<>(context);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            activityReference.get().findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            return activityReference.get().SaveBackground();
+        }
+
+        @Override
+        protected void onPostExecute(String path) {
+            activityReference.get().findViewById(R.id.progressBar).setVisibility(View.GONE);
+            ArrayList<Uri> uris = new ArrayList<>();
+            File dest = Environment.getExternalStorageDirectory();
+            InputStream in = activityReference.get().getResources().openRawResource(activityReference.get().getResources().getIdentifier(activityReference.get().SoundFile,"raw",activityReference.get().getPackageName()));
+
+            try
+            {
+                OutputStream out = new FileOutputStream(new File(dest, activityReference.get().SoundFile+".mp3"));
+                byte[] buf = new byte[1024];
+                int len;
+                while ( (len = in.read(buf, 0, buf.length)) != -1)
+                {
+                    out.write(buf, 0, len);
+                }
+                in.close();
+                out.close();
+            }
+            catch (Exception ignored) {}
+            activityReference.get().findViewById(R.id.progressBar).setVisibility(View.GONE);
+            Intent share = new Intent(Intent.ACTION_SEND_MULTIPLE);
+            share.setType("*/*");
+            uris.add(Uri.parse(path));
+            uris.add(Uri.parse(Environment.getExternalStorageDirectory().toString() + "/"+activityReference.get().SoundFile+".mp3"));
+            share.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+            activityReference.get().startActivity(Intent.createChooser(share, "Share level"));
+
+        }
+    }
+
 }

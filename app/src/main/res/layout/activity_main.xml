@@ -11,6 +11,7 @@
         android:layout_height="50.0dip"
         android:layout_below="@+id/letsPlay"
         android:layout_centerHorizontal="true"
+        android:filterTouchesWhenObscured="true"
         android:background="@drawable/facebook_bg" />
 
      
@@ -27,7 +28,8 @@
         android:textStyle="bold"
         android:layout_marginTop="20.0dip"
         android:layout_marginBottom="19dip"
-        android:background="@drawable/letsplayclickxml" />
+        android:background="@drawable/letsplayclickxml"
+        android:filterTouchesWhenObscured="true"/>
 
     <ImageView
         android:id="@+id/imageView1"
@@ -44,7 +46,7 @@
         android:layout_height="50.0dip"
         android:layout_alignStart="@+id/letsPlay"
         android:layout_below="@+id/letsPlay"
-
+         android:filterTouchesWhenObscured="true"
         android:background="@drawable/store_bg" />
 
     <Button
@@ -53,7 +55,8 @@
         android:layout_height="50.0dip"
         android:layout_alignEnd="@+id/letsPlay"
         android:layout_below="@+id/letsPlay"
-        android:background="@drawable/restart_bg" />
+        android:background="@drawable/restart_bg"
+        android:filterTouchesWhenObscured="true"/>
 
     <ImageView
         android:id="@+id/imageView2"

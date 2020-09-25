@@ -5,14 +5,6 @@
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
 
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-
-        -->
-    </style>
     <style name="white_style" parent="@android:style/Theme.Black.NoTitleBar">
         <item name="android:background">@android:color/white</item>
     </style>
@@ -20,9 +12,6 @@
         <item name="android:background">@color/main_bg</item>
     </style>
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
 
     <style name="hbtn" parent="@android:style/Widget.Button">
         <item name="android:textSize">24sp</item>
@@ -40,7 +29,17 @@
     <style name="dialogStyle" parent="android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
     </style>
-    
-    
+
+    <style name="btn_word"  parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/wordbox</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:filterTouchesWhenObscured">true</item>
+    </style>
+
 
 </resources>
